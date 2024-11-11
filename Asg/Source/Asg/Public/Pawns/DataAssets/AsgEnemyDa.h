@@ -10,7 +10,12 @@
  * 
  */
 UCLASS()
-class ASG_API UAsgEnemyDa : public UAsgPawnDABase
+class ASG_API UAsgEnemyDa : public UDataAsset
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	float AcceptableDistanceToShoot = 1000;
+
 };
