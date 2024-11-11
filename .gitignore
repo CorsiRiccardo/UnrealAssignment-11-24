@@ -1,3 +1,15 @@
+###################################
+# JetBrains Rider Generated Files #
+###################################
+# Cache Directory
+.idea
+
+# Solution and Project Files
+*.sln
+*.csproj
+*.sln.DotSettings
+*.sln.DotSettings.user
+
 # Visual Studio 2015 user specific files
 .vs/
 
@@ -51,6 +63,8 @@ Plugins/**/Binaries/*
 
 # Builds
 Build/*
+Builds/*
+
 
 # Whitelist PakBlacklist-<BuildConfiguration>.txt files
 !Build/*/
