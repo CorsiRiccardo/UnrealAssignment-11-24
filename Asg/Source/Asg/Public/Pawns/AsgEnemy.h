@@ -6,6 +6,7 @@
 #include "AsgPawnBase.h"
 #include "AsgEnemy.generated.h"
 
+class AAsgHero;
 class UAsgEnemyDa;
 
 UCLASS(Blueprintable)
@@ -15,7 +16,13 @@ class ASG_API AAsgEnemy : public AAsgPawnBase
 
 protected:
 	virtual void BeginPlay() override;
-
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	virtual void Tick(float DeltaSeconds) override;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UAsgEnemyDa> EnemyData;
+
+private:
+	TWeakObjectPtr<AAsgHero> Hero;
+
+	void LookAtPlayer();
 };

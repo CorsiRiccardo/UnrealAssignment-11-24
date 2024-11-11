@@ -17,6 +17,8 @@ AAsgPawnBase::AAsgPawnBase()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
 	Mesh->SetupAttachment(RootComponent);
 
+	Mesh->SetCollisionResponseToChannel(ECC_Camera,ECR_Ignore);
+	
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("Camera Boom"));
 	CameraBoom->SetupAttachment(Mesh);
 	
