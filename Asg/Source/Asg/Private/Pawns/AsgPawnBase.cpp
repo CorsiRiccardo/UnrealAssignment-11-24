@@ -7,6 +7,7 @@
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Pawns/Components/CombatComponent.h"
+#include "Pawns/Components/HealthComponent.h"
 
 
 // Sets default values
@@ -28,6 +29,7 @@ AAsgPawnBase::AAsgPawnBase()
 
 	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Pawn Movement"));
 	CombatComponent = CreateDefaultSubobject<UCombatComponent>(TEXT("Combat Component"));
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 }
 
 // Called when the game starts or when spawned
@@ -41,8 +43,13 @@ void AAsgPawnBase::BeginPlay()
 float AAsgPawnBase::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	class AController* EventInstigator, AActor* DamageCauser)
 {
-	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	
+	const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	if(HealthComponent)
+	{
+		HealthComponent->AddHealth(ActualDamage);
+	}
+	return ActualDamage;
 }
 
 // Called every frame

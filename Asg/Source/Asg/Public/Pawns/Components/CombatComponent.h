@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Pawns/AsgPawnBase.h"
 #include "CombatComponent.generated.h"
 
+
+class UWeaponData;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ASG_API UCombatComponent : public UActorComponent
@@ -21,7 +24,23 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-	                           FActorComponentTickFunction* ThisTickFunction) override;
+	
+	void Shoot();
+protected:
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UWeaponData> WeaponData;
+
+private:
+	UPROPERTY(VisibleAnywhere)
+	AAsgPawnBase* OwnerPawn = nullptr;
+
+	FTimerHandle FireTimerHandle;
+
+	bool bCanFire = true;
+
+	bool CanFire() const;
+	void StartFireTimer();
+	void FireTimerFinished();
+
 };

@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Asg/Public/Pawns/AsgPawnBase.h"
+#include "Pawns/Components/CombatComponent.h"
 
 void AAsgPlayerController::BeginPlay()
 {
@@ -61,6 +62,10 @@ void AAsgPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AAsgPlayerController::Shoot()
 {
+	if(const auto CastedControlledPawn = Cast<AAsgPawnBase>(GetPawn<APawn>()))
+	{
+		CastedControlledPawn->GetCombatComponent()->Shoot();
+	}
 }
 
 void AAsgPlayerController::CursorTrace()

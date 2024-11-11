@@ -3,6 +3,10 @@
 
 #include "Pawns/Components/CombatComponent.h"
 
+#include "Pawns/Components/WeaponData.h"
+#include "Pawns/Components/Projectiles/Projectile.h"
+#include "Pawns/Components/Projectiles/ProjectileBullet.h"
+
 
 // Sets default values for this component's properties
 UCombatComponent::UCombatComponent()
@@ -20,17 +24,48 @@ void UCombatComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	OwnerPawn = Cast<AAsgPawnBase>(GetOwner());
+	ensure(OwnerPawn);
 }
 
 
-// Called every frame
-void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                     FActorComponentTickFunction* ThisTickFunction)
+void UCombatComponent::Shoot()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if (!CanFire()) return;
 
-	// ...
+	bCanFire = false;
+
+	if (const auto World = GetWorld(); IsValid(World) && IsValid(OwnerPawn))
+	{
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.Owner = GetOwner();
+		SpawnParameters.Instigator = OwnerPawn;
+
+		World->SpawnActor<AProjectile>(
+			WeaponData->ProjectileBulletClass,
+			OwnerPawn->GetActorLocation() + OwnerPawn->GetActorForwardVector() * WeaponData->DistanceFromPawn,
+			OwnerPawn->GetActorRotation(),
+			SpawnParameters);
+	}
+
+	StartFireTimer();
 }
 
+bool UCombatComponent::CanFire() const
+{
+	return bCanFire;
+}
+
+void UCombatComponent::StartFireTimer()
+{
+	OwnerPawn->GetWorldTimerManager().SetTimer(
+		FireTimerHandle,
+		this,
+		&UCombatComponent::FireTimerFinished,
+		WeaponData->CooldownTime);
+}
+
+void UCombatComponent::FireTimerFinished()
+{
+	bCanFire = true;
+}

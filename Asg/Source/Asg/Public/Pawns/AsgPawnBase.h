@@ -7,6 +7,7 @@
 #include "GameFramework/Pawn.h"
 #include "AsgPawnBase.generated.h"
 
+class UHealthComponent;
 class UCombatComponent;
 class UFloatingPawnMovement;
 class UAsgPawnDABase;
@@ -46,9 +47,13 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UCombatComponent* CombatComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	UHealthComponent* HealthComponent;
+
 public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 	TOptional<float> GetMovementSpeed() const { return Data ? Data->MovementSpeed : -1; };
 	TOptional<float> GetMaxHealth() const { return Data ? Data->MaxHealth : -1; };
+	UCombatComponent* GetCombatComponent() const { return CombatComponent; };
 };

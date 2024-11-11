@@ -14,20 +14,19 @@ AProjectile::AProjectile()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	bReplicates = true;
-	
+
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>("CollisionBox");
 	RootComponent = CollisionBox;
 
 	CollisionBox->SetCollisionObjectType(ECC_WorldDynamic);
 	CollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	CollisionBox->SetCollisionResponseToAllChannels(ECR_Ignore);
-	
-	CollisionBox->SetCollisionResponseToChannel(ECC_Visibility,ECR_Block);
-	CollisionBox->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
+
+	CollisionBox->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+	CollisionBox->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovementComponent");
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
-	
 }
 
 // Called when the game starts or when spawned
@@ -35,7 +34,7 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if(Tracer)
+	if (Tracer)
 	{
 		TracerComponent = UGameplayStatics::SpawnEmitterAttached(
 			Tracer,
@@ -44,18 +43,14 @@ void AProjectile::BeginPlay()
 			GetActorLocation(),
 			GetActorRotation(),
 			EAttachLocation::KeepWorldPosition
-			);
+		);
 	}
 
-	//Binding only on the server
-	if(HasAuthority())
-	{
-		CollisionBox->OnComponentHit.AddDynamic(this,&ThisClass::OnHit);
-	}
+	CollisionBox->OnComponentHit.AddDynamic(this, &ThisClass::OnHit);
 }
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	FVector NormalImpulse, const FHitResult& Hit)
+                        FVector NormalImpulse, const FHitResult& Hit)
 {
 	Destroy();
 }
@@ -63,13 +58,13 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 void AProjectile::Destroyed()
 {
 	Super::Destroyed();
-	if(ImpactEffect)
+	if (ImpactEffect)
 	{
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),ImpactEffect,GetActorLocation(),GetActorRotation());
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, GetActorLocation(), GetActorRotation());
 	}
-	if(ImpactSound)
+	if (ImpactSound)
 	{
-		UGameplayStatics::PlaySoundAtLocation(this,ImpactSound,GetActorLocation());
+		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
 	}
 }
 
@@ -78,4 +73,3 @@ void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
-
