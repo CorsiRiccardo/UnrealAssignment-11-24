@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Pawns/Components/CombatComponent.h"
 
 
 // Sets default values
@@ -26,6 +27,7 @@ AAsgPawnBase::AAsgPawnBase()
 	CameraComponent->SetupAttachment(CameraBoom);
 
 	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Pawn Movement"));
+	CombatComponent = CreateDefaultSubobject<UCombatComponent>(TEXT("Combat Component"));
 }
 
 // Called when the game starts or when spawned
@@ -34,6 +36,13 @@ void AAsgPawnBase::BeginPlay()
 	Super::BeginPlay();
 
 	checkf(Data, TEXT("No data assigned!"));
+}
+
+float AAsgPawnBase::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	class AController* EventInstigator, AActor* DamageCauser)
+{
+	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	
 }
 
 // Called every frame

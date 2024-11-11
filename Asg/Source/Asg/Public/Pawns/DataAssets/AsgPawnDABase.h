@@ -22,5 +22,5 @@ public:
 	float MovementSpeed = 500;
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
-	float Health = 100;
+	float MaxHealth = 100;
 };
