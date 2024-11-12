@@ -60,7 +60,7 @@ float AAsgPawnBase::TakeDamage(float DamageAmount, struct FDamageEvent const& Da
 		const float CurrentHealth = HealthComponent->AddHealth(-ActualDamage);
 		if(OverHeadWidget)
 		{
-			if(UOverheadHealthWidget* CastedWidget = dynamic_cast<UOverheadHealthWidget*>(OverHeadWidget);IsValid(CastedWidget))
+			if(UOverheadHealthWidget* CastedWidget = Cast<UOverheadHealthWidget>(OverHeadWidget->GetWidget());IsValid(CastedWidget))
 			{
 				CastedWidget->HealthProgressBar->SetPercent(CurrentHealth/Data->MaxHealth);
 			}	
