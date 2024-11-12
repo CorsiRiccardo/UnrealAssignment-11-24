@@ -19,7 +19,10 @@ AAsgPawnBase::AAsgPawnBase()
 {
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
+	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Component"));
+	SetRootComponent(CapsuleComponent);
+	
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
 	Mesh->SetupAttachment(RootComponent);
 
@@ -27,9 +30,6 @@ AAsgPawnBase::AAsgPawnBase()
 
 	OverHeadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverHead Widget"));
 	OverHeadWidget->SetupAttachment(Mesh);
-	
-	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Component"));
-	CapsuleComponent->SetupAttachment(Mesh);
 	
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("Camera Boom"));
 	CameraBoom->SetupAttachment(Mesh);
