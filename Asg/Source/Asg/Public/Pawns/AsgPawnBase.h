@@ -35,7 +35,7 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Mesh = nullptr;
+	USkeletalMeshComponent* SkeletalMesh = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UCapsuleComponent* CapsuleComponent = nullptr;
@@ -73,5 +73,5 @@ public:
 	TOptional<float> GetRegenAmount() const { return Data ? Data->RegenAmount : -1; };
 	
 	UCombatComponent* GetCombatComponent() const { return CombatComponent; };
-	UStaticMeshComponent* GetStaticMeshComponent() { return Mesh; };
+	USkeletalMeshComponent* GetSkeletalMeshComponent() { return SkeletalMesh; };
 };

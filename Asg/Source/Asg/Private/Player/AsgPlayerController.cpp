@@ -97,15 +97,15 @@ void AAsgPlayerController::CursorTrace() const
 		const FVector_NetQuantize HitLocation = CursorHit.ImpactPoint;
 		const FVector_NetQuantize HitLocationNormalized (HitLocation.X, HitLocation.Y, 0);
 
-		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(CastedPawn->GetStaticMeshComponent()->GetComponentLocation(), HitLocation);
+		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(CastedPawn->GetSkeletalMeshComponent()->GetComponentLocation(), HitLocation);
 
 		// const FVector Forward = GetPawn()->GetActorLocation() - HitLocationNormalized;
 		// const FRotator Rot = UKismetMathLibrary::MakeRotFromXZ(Forward, FVector::UpVector);
-		CastedPawn->GetStaticMeshComponent()->SetRelativeRotation(
+		CastedPawn->GetSkeletalMeshComponent()->SetWorldRotation(
 			FRotator(
-				LookAtRotation.Pitch,
-				CastedPawn->GetStaticMeshComponent()->GetComponentRotation().Roll,
-				LookAtRotation.Yaw),
+				0,
+				LookAtRotation.Yaw,
+				0),
 			true);
 	}
 }

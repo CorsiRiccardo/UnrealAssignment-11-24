@@ -23,10 +23,10 @@ AAsgPawnBase::AAsgPawnBase()
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Component"));
 	SetRootComponent(CapsuleComponent);
 	
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
-	Mesh->SetupAttachment(RootComponent);
+	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
+	SkeletalMesh->SetupAttachment(RootComponent);
 
-	Mesh->SetCollisionResponseToChannel(ECC_Camera,ECR_Ignore);
+	SkeletalMesh->SetCollisionResponseToChannel(ECC_Camera,ECR_Ignore);
 
 	OverHeadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverHead Widget"));
 	OverHeadWidget->SetupAttachment(RootComponent);
