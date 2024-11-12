@@ -26,4 +26,16 @@ class ASG_API UAsgUserWidget : public UUserWidget
 	
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* LossAmountText;
+
+	UFUNCTION()
+	void SetWin(int Win) const;
+	
+	UFUNCTION()
+	void SetLoss(int Loss) const;
+
+	UFUNCTION()
+	void SetCurrentHeight(float InHeight) const;
+
+	UFUNCTION()
+	void SetMaxHeight(float InMaxHeight) const;
 };

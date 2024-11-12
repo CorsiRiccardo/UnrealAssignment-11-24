@@ -2,3 +2,15 @@
 
 
 #include "Asg/Public/AsgGameMode.h"
+
+void AAsgGameMode::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	CurrentCooldown += DeltaSeconds;
+	if (CurrentCooldown >= TickCooldown)
+	{
+		CurrentCooldown = 0;
+		CurrentHeight += HeightPerTick;
+	}
+}
