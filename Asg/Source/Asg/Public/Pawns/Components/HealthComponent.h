@@ -27,8 +27,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	float MaxHealth = 0;	
 public:
-	
+
+	//Returns updated health
 	UFUNCTION(BlueprintCallable)
-	void AddHealth(float InHealth);
+	float AddHealth(float InHealth);
 
 };

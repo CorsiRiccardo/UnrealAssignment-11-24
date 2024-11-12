@@ -26,8 +26,9 @@ void UHealthComponent::BeginPlay()
 	}
 }
 
-void UHealthComponent::AddHealth(const float InHealth)
+float UHealthComponent::AddHealth(const float InHealth)
 {
-	CurrentHealth += FMath::Clamp(InHealth,0,MaxHealth);
+	CurrentHealth = FMath::Clamp(CurrentHealth + InHealth,0,MaxHealth);
+	return CurrentHealth;
 }
 

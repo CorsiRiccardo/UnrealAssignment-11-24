@@ -4,10 +4,14 @@
 #include "Asg/Public/Pawns/AsgPawnBase.h"
 
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/ProgressBar.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Pawns/Components/CombatComponent.h"
 #include "Pawns/Components/HealthComponent.h"
+#include "UI/Widgets/OverheadHealthWidget.h"
 
 
 // Sets default values
@@ -20,6 +24,12 @@ AAsgPawnBase::AAsgPawnBase()
 	Mesh->SetupAttachment(RootComponent);
 
 	Mesh->SetCollisionResponseToChannel(ECC_Camera,ECR_Ignore);
+
+	OverHeadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverHead Widget"));
+	OverHeadWidget->SetupAttachment(Mesh);
+	
+	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Component"));
+	CapsuleComponent->SetupAttachment(Mesh);
 	
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("Camera Boom"));
 	CameraBoom->SetupAttachment(Mesh);
@@ -47,7 +57,14 @@ float AAsgPawnBase::TakeDamage(float DamageAmount, struct FDamageEvent const& Da
 
 	if(HealthComponent)
 	{
-		HealthComponent->AddHealth(ActualDamage);
+		const float CurrentHealth = HealthComponent->AddHealth(-ActualDamage);
+		if(OverHeadWidget)
+		{
+			if(UOverheadHealthWidget* CastedWidget = dynamic_cast<UOverheadHealthWidget*>(OverHeadWidget);IsValid(CastedWidget))
+			{
+				CastedWidget->HealthProgressBar->SetPercent(CurrentHealth/Data->MaxHealth);
+			}	
+		}
 	}
 	return ActualDamage;
 }

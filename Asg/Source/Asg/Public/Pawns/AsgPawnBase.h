@@ -7,6 +7,8 @@
 #include "GameFramework/Pawn.h"
 #include "AsgPawnBase.generated.h"
 
+class UCapsuleComponent;
+class UWidgetComponent;
 class UHealthComponent;
 class UCombatComponent;
 class UFloatingPawnMovement;
@@ -33,25 +35,32 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Mesh;
+	UStaticMeshComponent* Mesh = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UCapsuleComponent* CapsuleComponent = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
-	UCameraComponent* CameraComponent;
+	UCameraComponent* CameraComponent = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
-	USpringArmComponent* CameraBoom;
+	USpringArmComponent* CameraBoom = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
-	UFloatingPawnMovement* FloatingPawnMovement;
-	
-	UPROPERTY(VisibleAnywhere)
-	UCombatComponent* CombatComponent;
+	UFloatingPawnMovement* FloatingPawnMovement = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
-	UHealthComponent* HealthComponent;
+	UCombatComponent* CombatComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere)
+	UHealthComponent* HealthComponent = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UWidgetComponent* OverHeadWidget = nullptr;
 
 public:
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	                         class AController* EventInstigator, AActor* DamageCauser) override;
 
 	TOptional<float> GetMovementSpeed() const { return Data ? Data->MovementSpeed : -1; };
 	TOptional<float> GetMaxHealth() const { return Data ? Data->MaxHealth : -1; };

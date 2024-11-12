@@ -2,7 +2,6 @@
 
 
 #include "Pawns/Components/Projectiles/ProjectileBullet.h"
-#include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
 #include "Pawns/AsgPawnBase.h"
 
@@ -23,11 +22,12 @@ void AProjectileBullet::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AProjectileBullet::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-                              FVector NormalImpulse, const FHitResult& Hit)
+void AProjectileBullet::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (const auto OwnerCharacter = Cast<AAsgPawnBase>(GetOwner()))
 	{
+		if(OwnerCharacter == OtherActor) return;
 		if (const auto OwnerController = OwnerCharacter->GetController(); IsValid(OwnerController))
 		{
 			UGameplayStatics::ApplyDamage(
@@ -40,5 +40,5 @@ void AProjectileBullet::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherAc
 		}
 	}
 
-	Super::OnHit(HitComponent, OtherActor, OtherComp, NormalImpulse, Hit);
+	Super::OnBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 }
