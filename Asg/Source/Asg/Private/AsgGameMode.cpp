@@ -12,5 +12,6 @@ void AAsgGameMode::Tick(float DeltaSeconds)
 	{
 		CurrentCooldown = 0;
 		CurrentHeight += HeightPerTick;
+		OnHeightChanged.Broadcast(CurrentHeight);
 	}
 }

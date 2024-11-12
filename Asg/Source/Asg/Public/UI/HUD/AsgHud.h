@@ -6,6 +6,8 @@
 #include "GameFramework/HUD.h"
 #include "AsgHud.generated.h"
 
+class UAsgGameInstance;
+class AAsgGameMode;
 class UAsgUserWidget;
 class UAsgWidgetController;
 /**
@@ -20,12 +22,15 @@ protected:
 	virtual void BeginPlay() override;
 	void InitOverlay();
 
-private:
-	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAsgUserWidget> OverlayWidgetClass;
+	
+private:
 
 	UPROPERTY()
 	TObjectPtr<UAsgUserWidget> OverlayWidget;
+	
+	TWeakObjectPtr<AAsgGameMode> GameMode;
+	TWeakObjectPtr<UAsgGameInstance> GameInstance;
 
 };

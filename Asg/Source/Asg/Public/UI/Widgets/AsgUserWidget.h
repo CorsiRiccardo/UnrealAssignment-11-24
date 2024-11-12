@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "AsgUserWidget.generated.h"
 
+class AAsgGameMode;
+class UAsgGameInstance;
 class UTextBlock;
 /**
  * 
@@ -14,7 +16,8 @@ UCLASS()
 class ASG_API UAsgUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
-
+public:
+	
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* HeightAmount;
 	
@@ -34,8 +37,15 @@ class ASG_API UAsgUserWidget : public UUserWidget
 	void SetLoss(int Loss) const;
 
 	UFUNCTION()
-	void SetCurrentHeight(float InHeight) const;
+	void SetCurrentHeight(float InHeight);
 
 	UFUNCTION()
 	void SetMaxHeight(float InMaxHeight) const;
+
+	void SetGameInstance(UAsgGameInstance* InGameInstance);
+	void SetGameMode(AAsgGameMode* InGameMode);
+private:
+	
+	TWeakObjectPtr<AAsgGameMode> GameMode;
+	TWeakObjectPtr<UAsgGameInstance> GameInstance;
 };

@@ -13,4 +13,14 @@ UCLASS()
 class ASG_API UAsgGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
+	
+private:
+	
+	int Win = 0;
+	int Loss = 0;
+
+public:
+
+	FORCEINLINE int GetWin() const {return Win;};
+	FORCEINLINE int GetLoss() const {return Loss;};
 };

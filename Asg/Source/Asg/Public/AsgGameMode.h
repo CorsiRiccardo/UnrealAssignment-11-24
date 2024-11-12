@@ -33,4 +33,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float TickCooldown = 0.1;
 	
+public:
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHeightChanged,const float,NewHeight);
+	FOnHeightChanged OnHeightChanged;
+	
+	FORCEINLINE float GetCurrentHeight() const {return CurrentHeight;}
+	FORCEINLINE float GetMaxHeight() const {return MaxHeight;}
 };
