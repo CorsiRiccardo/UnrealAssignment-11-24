@@ -48,23 +48,32 @@ void AAsgPawnBase::BeginPlay()
 	Super::BeginPlay();
 
 	checkf(Data, TEXT("No data assigned!"));
+
+	if(HealthComponent)
+	{
+		HealthComponent->OnHealthChanged.AddDynamic(this,&AAsgPawnBase::UpdateHealthWidget);
+	}
+}
+
+void AAsgPawnBase::UpdateHealthWidget(int32 NewHealth)
+{
+	if(OverHeadWidget)
+	{
+		if(UOverheadHealthWidget* CastedWidget = Cast<UOverheadHealthWidget>(OverHeadWidget->GetWidget());IsValid(CastedWidget))
+		{
+			CastedWidget->HealthProgressBar->SetPercent(NewHealth/Data->MaxHealth);
+		}	
+	}
 }
 
 float AAsgPawnBase::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
-	class AController* EventInstigator, AActor* DamageCauser)
+                               class AController* EventInstigator, AActor* DamageCauser)
 {
 	const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
 	if(HealthComponent)
 	{
-		const float CurrentHealth = HealthComponent->AddHealth(-ActualDamage);
-		if(OverHeadWidget)
-		{
-			if(UOverheadHealthWidget* CastedWidget = Cast<UOverheadHealthWidget>(OverHeadWidget->GetWidget());IsValid(CastedWidget))
-			{
-				CastedWidget->HealthProgressBar->SetPercent(CurrentHealth/Data->MaxHealth);
-			}	
-		}
+		HealthComponent->AddHealth(-ActualDamage);
 	}
 	return ActualDamage;
 }

@@ -23,4 +23,11 @@ public:
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	float MaxHealth = 100;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	float RegenTime = 2;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	float RegenAmount = 3;
+	
 };

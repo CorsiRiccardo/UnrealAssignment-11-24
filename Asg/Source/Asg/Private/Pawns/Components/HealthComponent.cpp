@@ -9,7 +9,7 @@
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 
 }
 
@@ -23,12 +23,51 @@ void UHealthComponent::BeginPlay()
 	{
 		MaxHealth = CastedOwner->GetMaxHealth().GetValue();
 		CurrentHealth = MaxHealth;
+		RegenTime = CastedOwner->GetRegenTime().GetValue();
+		RegenAmount = CastedOwner->GetRegenAmount().GetValue();
 	}
+}
+
+void UHealthComponent::TickComponent(float DeltaTime, enum ELevelTick TickType,
+	FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if(bCanRegen)
+	{
+		LastRegenElapsedTime += DeltaTime;
+		if(LastRegenElapsedTime >= RegenTime)
+		{
+			LastRegenElapsedTime = 0;
+			AddHealth(RegenAmount);
+		}
+	}
+}
+
+void UHealthComponent::StartRegenTimer()
+{
+	GetOwner()->GetWorldTimerManager().SetTimer(
+		HealthRegenTimerHandle,
+		this,
+		&UHealthComponent::RegenTimerFinished,
+		RegenTime);
+}
+
+void UHealthComponent::RegenTimerFinished()
+{
+	LastRegenElapsedTime = RegenTime;
+	bCanRegen = true;
 }
 
 float UHealthComponent::AddHealth(const float InHealth)
 {
+	if(InHealth < 0)
+	{
+		bCanRegen = false;
+		StartRegenTimer();
+	}
 	CurrentHealth = FMath::Clamp(CurrentHealth + InHealth,0,MaxHealth);
+	OnHealthChanged.Broadcast(CurrentHealth);
 	return CurrentHealth;
 }
 

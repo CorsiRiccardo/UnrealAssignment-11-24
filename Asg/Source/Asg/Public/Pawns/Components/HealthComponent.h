@@ -19,15 +19,32 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 private:
 	UPROPERTY(VisibleAnywhere)
 	float CurrentHealth = 0;
 
 	UPROPERTY(VisibleAnywhere)
-	float MaxHealth = 0;	
-public:
+	float MaxHealth = 0;
 
+	UPROPERTY(VisibleAnywhere)
+	float RegenTime = 0;
+
+	UPROPERTY(VisibleAnywhere)
+	float RegenAmount = 0;
+
+	FTimerHandle HealthRegenTimerHandle;
+
+	bool bCanRegen = true;
+	float LastRegenElapsedTime = 0;
+	
+	void StartRegenTimer();
+	void RegenTimerFinished();
+public:
+	
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, int32, Health);
+	FOnHealthChanged OnHealthChanged;
+	
 	//Returns updated health
 	UFUNCTION(BlueprintCallable)
 	float AddHealth(float InHealth);

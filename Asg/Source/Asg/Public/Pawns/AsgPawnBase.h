@@ -58,12 +58,20 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UWidgetComponent* OverHeadWidget = nullptr;
 
+	UFUNCTION()
+	void UpdateHealthWidget(int32 NewHealth);
 public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	                         class AController* EventInstigator, AActor* DamageCauser) override;
 
+	//*
+	// DATA GETTERS
+	//*//
 	TOptional<float> GetMovementSpeed() const { return Data ? Data->MovementSpeed : -1; };
 	TOptional<float> GetMaxHealth() const { return Data ? Data->MaxHealth : -1; };
+	TOptional<float> GetRegenTime() const { return Data ? Data->RegenTime : -1; };
+	TOptional<float> GetRegenAmount() const { return Data ? Data->RegenAmount : -1; };
+	
 	UCombatComponent* GetCombatComponent() const { return CombatComponent; };
 	UStaticMeshComponent* GetStaticMeshComponent() { return Mesh; };
 };
