@@ -20,7 +20,11 @@ private:
 	float CurrentHeight = 0;
 
 	float CurrentCooldown = 0;
-	
+
+	bool GameEnded = false;
+
+	void EndGame(bool HasWon);
+
 protected:
 	virtual void Tick(float DeltaSeconds) override;
 	
