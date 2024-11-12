@@ -7,6 +7,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Projectile.generated.h"
 
+class USoundCue;
 class UBoxComponent;
 
 UCLASS()

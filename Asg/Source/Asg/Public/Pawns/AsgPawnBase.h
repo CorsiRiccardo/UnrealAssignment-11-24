@@ -65,4 +65,5 @@ public:
 	TOptional<float> GetMovementSpeed() const { return Data ? Data->MovementSpeed : -1; };
 	TOptional<float> GetMaxHealth() const { return Data ? Data->MaxHealth : -1; };
 	UCombatComponent* GetCombatComponent() const { return CombatComponent; };
+	UStaticMeshComponent* GetStaticMeshComponent() { return Mesh; };
 };

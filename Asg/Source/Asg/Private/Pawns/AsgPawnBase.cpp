@@ -29,10 +29,10 @@ AAsgPawnBase::AAsgPawnBase()
 	Mesh->SetCollisionResponseToChannel(ECC_Camera,ECR_Ignore);
 
 	OverHeadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverHead Widget"));
-	OverHeadWidget->SetupAttachment(Mesh);
+	OverHeadWidget->SetupAttachment(RootComponent);
 	
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("Camera Boom"));
-	CameraBoom->SetupAttachment(Mesh);
+	CameraBoom->SetupAttachment(RootComponent);
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComponent->SetupAttachment(CameraBoom);

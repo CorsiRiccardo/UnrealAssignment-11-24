@@ -20,7 +20,7 @@ class ASG_API AAsgPlayerController : public APlayerController
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
-
+	virtual void Tick(float DeltaSeconds) override;
 private:
 
 	UPROPERTY(EditAnywhere, Category="Input")
@@ -34,5 +34,5 @@ private:
 	
 	void Move(const FInputActionValue& InputActionValue);
 	void Shoot();
-	void CursorTrace();
+	void CursorTrace() const;
 };
