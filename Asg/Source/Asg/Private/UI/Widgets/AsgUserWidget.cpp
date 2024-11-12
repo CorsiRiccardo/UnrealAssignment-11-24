@@ -29,7 +29,7 @@ void UAsgUserWidget::SetCurrentHeight(const float InHeight)
 {
 	if(WinAmountText)
 	{
-		const FString InHeightText = FString::Printf(TEXT("%f"), InHeight);
+		const FString InHeightText = FString::Printf(TEXT("%d"), static_cast<int>(InHeight));
 		HeightAmount->SetText(FText::FromString(InHeightText));
 	}
 }
@@ -38,7 +38,7 @@ void UAsgUserWidget::SetMaxHeight(float InMaxHeight) const
 {
 	if(WinAmountText)
 	{
-		const FString InMaxHeightText = FString::Printf(TEXT("%f"), InMaxHeight);
+		const FString InMaxHeightText = FString::Printf(TEXT("%d"), static_cast<int>(InMaxHeight));
 		MaxHeightAmount->SetText(FText::FromString(InMaxHeightText));
 	}
 }
@@ -63,6 +63,7 @@ void UAsgUserWidget::SetGameMode(AAsgGameMode* InGameMode)
 	GameMode = InGameMode;
 	if(GameMode.IsValid())
 	{
+		SetMaxHeight(GameMode.Get()->GetMaxHeight());
 		GameMode.Get()->OnHeightChanged.AddDynamic(this,&UAsgUserWidget::SetCurrentHeight);
 	}
 }
