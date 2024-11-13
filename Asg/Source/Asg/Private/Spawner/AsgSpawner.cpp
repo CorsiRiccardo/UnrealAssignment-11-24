@@ -3,6 +3,9 @@
 
 #include "Spawner/AsgSpawner.h"
 
+#include "Pawns/AsgEnemy.h"
+#include "Pawns/AsgPawnBase.h"
+
 
 // Sets default values
 AAsgSpawner::AAsgSpawner()
@@ -15,12 +18,33 @@ AAsgSpawner::AAsgSpawner()
 void AAsgSpawner::BeginPlay()
 {
 	Super::BeginPlay();
+
+	check(EnemyClass);
 	
+}
+
+void AAsgSpawner::SpawnEnemies(int32 Amount)
+{
+	for (int32 i = 0; i < Amount; i++)
+	{
+		FVector Location = GetActorLocation();
+		FRotator Rotation = GetActorRotation();
+		FActorSpawnParameters SpawnInfo;
+		
+		GetWorld()->SpawnActor<AAsgEnemy>(EnemyClass,Location, Rotation, SpawnInfo);
+	}
 }
 
 // Called every frame
 void AAsgSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	LastSpawnTimeElapsed+= DeltaTime;
+	if(LastSpawnTimeElapsed >= EnemySpawnTime)
+	{
+		LastSpawnTimeElapsed = 0;
+		SpawnEnemies(1);
+	}
 }
 
