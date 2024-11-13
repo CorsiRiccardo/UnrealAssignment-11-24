@@ -27,7 +27,8 @@ void AProjectileBullet::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 {
 	if (const auto OwnerCharacter = Cast<AAsgPawnBase>(GetOwner()))
 	{
-		if(OwnerCharacter == OtherActor) return;
+		//Make sure that AI doesnt kill itself
+		if(OwnerCharacter->GetClass() == OtherActor->GetClass()) return;
 		if (const auto OwnerController = OwnerCharacter->GetController(); IsValid(OwnerController))
 		{
 			UGameplayStatics::ApplyDamage(
