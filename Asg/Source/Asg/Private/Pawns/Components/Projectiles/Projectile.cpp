@@ -38,17 +38,6 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginOverlap);
 
-	// if (Tracer)
-	// {
-	// 	TracerComponent = UGameplayStatics::SpawnEmitterAttached(
-	// 		Tracer,
-	// 		CollisionBox,
-	// 		FName(),
-	// 		GetActorLocation(),
-	// 		GetActorRotation(),
-	// 		EAttachLocation::KeepWorldPosition
-	// 	);
-	// }
 
 }
 
