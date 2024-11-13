@@ -32,7 +32,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Data")
 	TObjectPtr<UAsgPawnDABase> Data;
-	
+
+	UPROPERTY(VisibleAnywhere)
+	UFloatingPawnMovement* FloatingPawnMovement = nullptr;
+
 	UFUNCTION()
 	virtual void OnHealthChangedResponse(int32 NewHealth);
 private:
@@ -47,9 +50,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* CameraBoom = nullptr;
-
-	UPROPERTY(VisibleAnywhere)
-	UFloatingPawnMovement* FloatingPawnMovement = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
 	UCombatComponent* CombatComponent = nullptr;
@@ -72,5 +72,5 @@ public:
 	TOptional<float> GetRegenAmount() const { return Data ? Data->RegenAmount : -1; };
 	
 	UCombatComponent* GetCombatComponent() const { return CombatComponent; };
-	USkeletalMeshComponent* GetSkeletalMeshComponent() { return SkeletalMesh; };
+	USkeletalMeshComponent* GetSkeletalMeshComponent() const { return SkeletalMesh; };
 };

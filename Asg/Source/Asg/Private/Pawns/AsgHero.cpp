@@ -4,6 +4,7 @@
 #include "Asg/Public/Pawns/AsgHero.h"
 
 #include "AsgGameMode.h"
+#include "GameFramework/FloatingPawnMovement.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -19,3 +20,4 @@ void AAsgHero::OnHealthChangedResponse(int32 NewHealth)
 		}
 	}
 }
+

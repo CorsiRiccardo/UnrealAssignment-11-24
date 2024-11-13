@@ -13,4 +13,5 @@ class ASG_API AAsgHero : public AAsgPawnBase
 
 protected:
 	virtual void OnHealthChangedResponse(int32 NewHealth) override;
+
 };
