@@ -23,6 +23,12 @@ void AAsgGameMode::Tick(float DeltaSeconds)
 	}
 }
 
+void AAsgGameMode::NotifyHeroDeath()
+{
+	if(GameEnded) return;
+	EndGame(false);
+}
+
 void AAsgGameMode::EndGame(bool HasWon)
 {
 	GameEnded = true;

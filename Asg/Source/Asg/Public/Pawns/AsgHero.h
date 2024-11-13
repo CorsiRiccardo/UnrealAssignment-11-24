@@ -10,4 +10,7 @@ UCLASS(Blueprintable)
 class ASG_API AAsgHero : public AAsgPawnBase
 {
 	GENERATED_BODY()
+
+protected:
+	virtual void OnHealthChangedResponse(int32 NewHealth) override;
 };

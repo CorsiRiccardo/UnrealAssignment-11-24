@@ -40,7 +40,9 @@ protected:
 public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHeightChanged,const float,NewHeight);
 	FOnHeightChanged OnHeightChanged;
-	
+
+	void NotifyHeroDeath();
+
 	FORCEINLINE float GetCurrentHeight() const {return CurrentHeight;}
 	FORCEINLINE float GetMaxHeight() const {return MaxHeight;}
 };
