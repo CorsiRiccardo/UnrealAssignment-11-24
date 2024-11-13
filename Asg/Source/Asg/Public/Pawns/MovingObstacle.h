@@ -24,7 +24,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UBoxComponent> BoxComponent = nullptr;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite)
 	TObjectPtr<UStaticMeshComponent> StaticMeshComponent = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
