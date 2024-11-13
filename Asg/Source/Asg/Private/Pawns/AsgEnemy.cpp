@@ -11,9 +11,9 @@ void AAsgEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	checkf(EnemyData,TEXT("Enemy data not set!"));
-	
-	Hero = CastChecked<AAsgHero>(UGameplayStatics::GetPlayerPawn(GetWorld(),0));
+	checkf(EnemyData, TEXT("Enemy data not set!"));
+
+	Hero = CastChecked<AAsgHero>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 }
 
 void AAsgEnemy::Tick(float DeltaSeconds)
@@ -21,12 +21,17 @@ void AAsgEnemy::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	LookAtPlayer();
-	
+}
+
+void AAsgEnemy::OnHealthChangedResponse(int32 NewHealth)
+{
+	Super::OnHealthChangedResponse(NewHealth);
+	if (NewHealth <= 0) Destroy();
 }
 
 void AAsgEnemy::LookAtPlayer()
 {
-	if(Hero.IsValid())
+	if (Hero.IsValid())
 	{
 		const FVector Forward = Hero->GetActorLocation() - GetActorLocation();
 		const FRotator Rot = UKismetMathLibrary::MakeRotFromXZ(Forward, FVector::UpVector);

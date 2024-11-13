@@ -32,7 +32,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Data")
 	TObjectPtr<UAsgPawnDABase> Data;
-
+	
+	UFUNCTION()
+	virtual void OnHealthChangedResponse(int32 NewHealth);
 private:
 	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* SkeletalMesh = nullptr;
@@ -58,8 +60,6 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UWidgetComponent* OverHeadWidget = nullptr;
 
-	UFUNCTION()
-	void UpdateHealthWidget(int32 NewHealth);
 public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	                         class AController* EventInstigator, AActor* DamageCauser) override;

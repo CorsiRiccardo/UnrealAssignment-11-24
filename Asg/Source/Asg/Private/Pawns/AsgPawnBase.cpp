@@ -51,11 +51,11 @@ void AAsgPawnBase::BeginPlay()
 
 	if(HealthComponent)
 	{
-		HealthComponent->OnHealthChanged.AddDynamic(this,&AAsgPawnBase::UpdateHealthWidget);
+		HealthComponent->OnHealthChanged.AddDynamic(this,&AAsgPawnBase::OnHealthChangedResponse);
 	}
 }
 
-void AAsgPawnBase::UpdateHealthWidget(int32 NewHealth)
+void AAsgPawnBase::OnHealthChangedResponse(int32 NewHealth)
 {
 	if(OverHeadWidget)
 	{

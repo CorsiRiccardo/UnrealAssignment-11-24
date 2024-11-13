@@ -21,6 +21,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UAsgEnemyDa> EnemyData;
 
+	virtual void OnHealthChangedResponse(int32 NewHealth) override;
 private:
 	TWeakObjectPtr<AAsgHero> Hero;
 
