@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "AsgSpawner.generated.h"
 
+class UBoxComponent;
 class AAsgPawnBase;
 
 UCLASS()
@@ -24,12 +25,15 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UBoxComponent> BoxComponent;
+	
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AAsgPawnBase> EnemyClass;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<AAsgPawnBase>> ObstaclesToSpawn;
 
-	void SpawnEnemies(int32 Amount);
+	void SpawnEnemies(int32 Amount) const;
 public:
 
 	UPROPERTY(EditAnywhere)
@@ -41,5 +45,8 @@ public:
 private:
 
 	float LastSpawnTimeElapsed = 0;
+	
+	FVector GetRandomSpawnLocationInBox() const;
+
 	
 };
