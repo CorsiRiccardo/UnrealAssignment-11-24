@@ -67,7 +67,6 @@ public:
 	//*
 	// DATA GETTERS
 	//*//
-	TOptional<float> GetMovementSpeed() const { return Data ? Data->MovementSpeed : -1; };
 	TOptional<float> GetMaxHealth() const { return Data ? Data->MaxHealth : -1; };
 	TOptional<float> GetRegenTime() const { return Data ? Data->RegenTime : -1; };
 	TOptional<float> GetRegenAmount() const { return Data ? Data->RegenAmount : -1; };

@@ -61,14 +61,8 @@ void AAsgPlayerController::Move(const FInputActionValue& InputActionValue)
 	{
 		if (const auto CastedControlledPawn = Cast<AAsgPawnBase>(ControlledPawn))
 		{
-			TOptional<float> PawnMoveSpeed = CastedControlledPawn->GetMovementSpeed();
-
-			ensure(PawnMoveSpeed.IsSet());
-
-			const float MultFactor = PawnMoveSpeed.GetValue();
-
-			ControlledPawn->AddMovementInput(FwdDir, InputAxisVector.Y * MultFactor);
-			ControlledPawn->AddMovementInput(RightDir, InputAxisVector.X * MultFactor);
+			ControlledPawn->AddMovementInput(FwdDir, InputAxisVector.Y);
+			ControlledPawn->AddMovementInput(RightDir, InputAxisVector.X);
 		}
 		else
 		{

@@ -19,9 +19,6 @@ public:
 	//	BASE ATTRIBUTES
 	//*//
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
-	float MovementSpeed = 500;
-
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	float MaxHealth = 100;
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
