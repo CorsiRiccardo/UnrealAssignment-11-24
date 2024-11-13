@@ -28,19 +28,13 @@ protected:
 	TObjectPtr<UBoxComponent> BoxComponent;
 	
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AAsgPawnBase> EnemyClass;
+	TSubclassOf<APawn> PawnClass;
 
-	UPROPERTY(EditDefaultsOnly)
-	TArray<TSubclassOf<AAsgPawnBase>> ObstaclesToSpawn;
-
-	void SpawnEnemies(int32 Amount) const;
+	void SpawnPawns(int32 Amount) const;
 public:
 
 	UPROPERTY(EditAnywhere)
-	float EnemySpawnTime = 5;
-
-	UPROPERTY(EditAnywhere)
-	float MaxSpawnedEnemies = 10;
+	float SpawnTime = 5;
 
 private:
 

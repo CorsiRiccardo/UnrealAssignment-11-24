@@ -24,11 +24,11 @@ void AAsgSpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	check(EnemyClass);
+	check(PawnClass);
 	
 }
 
-void AAsgSpawner::SpawnEnemies(int32 Amount) const
+void AAsgSpawner::SpawnPawns(int32 Amount) const
 {
 	for (int32 i = 0; i < Amount; i++)
 	{
@@ -36,7 +36,7 @@ void AAsgSpawner::SpawnEnemies(int32 Amount) const
 		FRotator Rotation = GetActorRotation();
 		FActorSpawnParameters SpawnInfo;
 		
-		GetWorld()->SpawnActor<AAsgEnemy>(EnemyClass,Location, Rotation, SpawnInfo);
+		GetWorld()->SpawnActor<APawn>(PawnClass,Location, Rotation, SpawnInfo);
 	}
 }
 
@@ -62,10 +62,10 @@ void AAsgSpawner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	LastSpawnTimeElapsed+= DeltaTime;
-	if(LastSpawnTimeElapsed >= EnemySpawnTime)
+	if(LastSpawnTimeElapsed >= SpawnTime)
 	{
 		LastSpawnTimeElapsed = 0;
-		SpawnEnemies(1);
+		SpawnPawns(1);
 	}
 }
 

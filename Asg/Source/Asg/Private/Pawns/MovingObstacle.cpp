@@ -5,7 +5,16 @@
 
 #include "Components/BoxComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
+#include "Kismet/GameplayStatics.h"
+#include "Pawns/AsgPawnBase.h"
 
+
+void AMovingObstacle::BeginPlay()
+{
+	Super::BeginPlay();
+
+	BoxComponent->OnComponentHit.AddDynamic(this, &ThisClass::OnHit);
+}
 
 // Sets default values
 AMovingObstacle::AMovingObstacle()
@@ -15,16 +24,33 @@ AMovingObstacle::AMovingObstacle()
 
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
 	SetRootComponent(BoxComponent);
-	
+
+	BoxComponent->SetCollisionResponseToChannel(ECC_Camera,ECR_Ignore);
+
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	StaticMeshComponent->SetupAttachment(RootComponent);
 
 	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Pawn Movement"));
-
 }
 
 void AMovingObstacle::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	AddMovementInput(MovementDirection,1);
+	AddMovementInput(MovementDirection, 1);
+}
+
+void AMovingObstacle::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
+                            UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (OtherActor->GetClass() == AAsgPawnBase::StaticClass())
+	{
+		UGameplayStatics::ApplyDamage(
+			OtherActor,
+			10,
+			GetController(),
+			this,
+			UDamageType::StaticClass()
+		);
+	}
+	Destroy();
 }

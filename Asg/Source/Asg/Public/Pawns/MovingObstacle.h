@@ -16,6 +16,7 @@ class ASG_API AMovingObstacle : public APawn
 	GENERATED_BODY()
 
 public:
+	virtual void BeginPlay() override;
 	// Sets default values for this actor's properties
 	AMovingObstacle();
 
@@ -33,5 +34,8 @@ protected:
 	FVector MovementDirection = -FVector::RightVector;
 	
 	virtual void Tick(float DeltaSeconds) override;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	
 };

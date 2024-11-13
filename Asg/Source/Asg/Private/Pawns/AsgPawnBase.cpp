@@ -36,7 +36,7 @@ AAsgPawnBase::AAsgPawnBase()
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComponent->SetupAttachment(CameraBoom);
-
+	
 	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Pawn Movement"));
 	CombatComponent = CreateDefaultSubobject<UCombatComponent>(TEXT("Combat Component"));
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
