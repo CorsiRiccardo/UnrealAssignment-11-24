@@ -43,8 +43,9 @@ void UCombatComponent::Shoot()
 
 		World->SpawnActor<AProjectile>(
 			WeaponData->ProjectileBulletClass,
-			OwnerPawn->GetActorLocation() + OwnerPawn->GetActorForwardVector() * WeaponData->DistanceFromPawn,
-			OwnerPawn->GetActorRotation(),
+			OwnerPawn->GetSkeletalMeshComponent()->GetComponentLocation() +
+			OwnerPawn->GetSkeletalMeshComponent()->GetForwardVector() * WeaponData->DistanceFromPawn,
+			OwnerPawn->GetSkeletalMeshComponent()->GetComponentRotation(),
 			SpawnParameters);
 	}
 

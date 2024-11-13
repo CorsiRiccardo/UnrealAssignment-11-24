@@ -18,6 +18,9 @@ AProjectile::AProjectile()
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>("CollisionBox");
 	RootComponent = CollisionBox;
 
+	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComponent");
+	StaticMeshComponent->SetupAttachment(CollisionBox);
+	
 	CollisionBox->SetCollisionObjectType(ECC_WorldDynamic);
 	CollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	CollisionBox->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -35,17 +38,17 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnBeginOverlap);
 
-	if (Tracer)
-	{
-		TracerComponent = UGameplayStatics::SpawnEmitterAttached(
-			Tracer,
-			CollisionBox,
-			FName(),
-			GetActorLocation(),
-			GetActorRotation(),
-			EAttachLocation::KeepWorldPosition
-		);
-	}
+	// if (Tracer)
+	// {
+	// 	TracerComponent = UGameplayStatics::SpawnEmitterAttached(
+	// 		Tracer,
+	// 		CollisionBox,
+	// 		FName(),
+	// 		GetActorLocation(),
+	// 		GetActorRotation(),
+	// 		EAttachLocation::KeepWorldPosition
+	// 	);
+	// }
 
 }
 
@@ -72,4 +75,10 @@ void AProjectile::Destroyed()
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	LifeTime += DeltaTime;
+
+	if (LifeTime >= MaxLifeTime)
+	{
+		Destroy();
+	}
 }

@@ -24,29 +24,38 @@ public:
 private:
 
 	UPROPERTY(EditAnywhere)
-	UBoxComponent* CollisionBox;
+	TObjectPtr<UBoxComponent> CollisionBox;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UStaticMeshComponent> StaticMeshComponent;
 
 	UPROPERTY(VisibleAnywhere)
-	UProjectileMovementComponent* ProjectileMovementComponent;
+	TObjectPtr<UProjectileMovementComponent> ProjectileMovementComponent;
 
 	UPROPERTY(EditAnywhere)
-	UParticleSystem* Tracer;
-
-	UPROPERTY()
-	UParticleSystemComponent* TracerComponent;
-
-	UPROPERTY(EditAnywhere)
-	UParticleSystem* ImpactEffect;
+	TObjectPtr<UParticleSystem> Tracer;
+	//
+	// UPROPERTY()
+	// TObjectPtr<UParticleSystemComponent> TracerComponent;
 
 	UPROPERTY(EditAnywhere)
-	USoundCue* ImpactSound;
+	TObjectPtr<UParticleSystem> ImpactEffect;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USoundCue> ImpactSound;
 	
 protected:
 	UPROPERTY(EditAnywhere)
 	float Damage = 0;
+
+	UPROPERTY(EditAnywhere)
+	float MaxLifeTime = 4;
 	
 	UFUNCTION()
 	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 	virtual void Destroyed() override;
+private:
+
+	float LifeTime = 0;
 };
