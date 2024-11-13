@@ -19,8 +19,10 @@ private:
 	int Win = 0;
 	int Loss = 0;
 
+	void ReloadCurrentLevel() const;
 public:
-
+	void GameEnded(bool Result);
+	
 	FORCEINLINE int GetWin() const {return Win;};
 	FORCEINLINE int GetLoss() const {return Loss;};
 };

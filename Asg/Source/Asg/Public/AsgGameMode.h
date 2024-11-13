@@ -41,6 +41,9 @@ public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHeightChanged,const float,NewHeight);
 	FOnHeightChanged OnHeightChanged;
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGameEnded,const bool,Result);
+	FOnGameEnded OnGameEnded;
+
 	void NotifyHeroDeath();
 
 	FORCEINLINE float GetCurrentHeight() const {return CurrentHeight;}

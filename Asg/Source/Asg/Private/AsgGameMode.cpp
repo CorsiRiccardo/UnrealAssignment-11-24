@@ -3,6 +3,9 @@
 
 #include "Asg/Public/AsgGameMode.h"
 
+#include "AsgGameInstance.h"
+#include "Kismet/GameplayStatics.h"
+
 void AAsgGameMode::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -29,10 +32,15 @@ void AAsgGameMode::NotifyHeroDeath()
 	EndGame(false);
 }
 
-void AAsgGameMode::EndGame(bool HasWon)
+void AAsgGameMode::EndGame(const bool HasWon)
 {
 	GameEnded = true;
 
+	OnGameEnded.Broadcast(HasWon);
+	if(const auto AsgGameInstance = Cast<UAsgGameInstance>(UGameplayStatics::GetGameInstance(this)))
+	{
+		AsgGameInstance->GameEnded(HasWon);
+	}
 	if (APlayerController* const MyPlayer = Cast<APlayerController>(GEngine->GetFirstLocalPlayerController(GetWorld())))
 	{
 		MyPlayer->SetPause(true);
